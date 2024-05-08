@@ -1,4 +1,4 @@
-package com.damdamdeo;
+package com.damdamdeo.livechat.infrastructure;
 
 public record Message(String name, String data) {
     public Message(final String name, final String data) {

@@ -1,4 +1,4 @@
-package com.damdamdeo;
+package com.damdamdeo.livechat.infrastructure;
 
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;

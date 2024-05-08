@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  live-chat:
+    image: damdamdeo/live-chat:1.0.0-SNAPSHOT
+    ports:
+      - 8080:8080
+    environment:
+      - quarkus.http.host=0.0.0.0

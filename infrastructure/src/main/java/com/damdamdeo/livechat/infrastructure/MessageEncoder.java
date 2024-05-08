@@ -1,4 +1,4 @@
-package com.damdamdeo;
+package com.damdamdeo.livechat.infrastructure;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
