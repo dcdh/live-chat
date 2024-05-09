@@ -1,41 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omeglin - Talk to strangers</title>
-    <link href="/favicon.ico" type="image/svg+xml" rel="icon">
-    <link rel="stylesheet" href="/styles.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Live chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous">
+    <style>
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .local video {
+            transform: scaleX(-1);
+        }
+        /* Conditional styles for buttons */
+        .pairing button {
+            display: none;
+        }
+
+        [data-state=NOT_CONNECTED] button#startPairing,
+        [data-state=DISCONNECTED_LOCAL] button#startPairing,
+        [data-state=DISCONNECTED_REMOTE] button#startPairing,
+        [data-state=CONNECTING] button#abortPairing,
+        [data-state=CONNECTED] button#leavePairing {
+            display: block;
+        }
+
+        /* Conditional styles for spinner */
+        .spinner {
+            display: none;
+        }
+
+        [data-state=CONNECTING] .spinner {
+            display: block;
+        }
+
+        /* Conditional styles for remote video */
+        body:not([data-state=CONNECTED]) .remote video {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<header>
-    <img src="/omeglin.svg" alt="Omeglin logo" class="logo">
-</header>
-<main>
-    <div class="video-panel">
-        <section class="remote">
-            <img src="/tail-spin.svg" class="spinner" alt="">
-            <video id="remoteVideo" autoplay playsinline></video>
-        </section>
-        <section class="local">
-            <video id="localVideo" autoplay playsinline muted></video>
-        </section>
-    </div>
-    <div class="chat-panel">
-        <div class="chat-log" id="chatLog"></div>
-        <div class="chat-controls">
-            <div class="pairing">
-                <button id="startPairing">Find stranger</button>
-                <button id="abortPairing">Cancel</button>
-                <button id="leavePairing">Disconnect</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 remote">
+                <img src="tail-spin.svg" class="spinner" alt="">
+                <video id="remoteVideo" autoplay playsinline></video>
             </div>
-            <div class="messaging">
-                <input type="text" placeholder="Type a message..." id="chatInput">
-                <button id="chatSend">Send</button>
+            <div class="col-sm-6 local">
+                <video id="localVideo" autoplay playsinline muted></video>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 pairing">
+                <button id="startPairing" type="button" class="btn btn-primary">Find stranger</button>
+                <button id="abortPairing" type="button" class="btn btn-danger">Cancel</button>
+                <button id="leavePairing" type="button" class="btn btn-danger">Disconnect</button>
             </div>
         </div>
     </div>
-</main>
-<script type="module" src="/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>

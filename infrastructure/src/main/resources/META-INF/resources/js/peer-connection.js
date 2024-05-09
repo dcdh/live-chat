@@ -1,9 +1,9 @@
 export class PeerConnection {
     sdpExchange; // WebSocket with listeners for exchanging SDP offers and answers
     peerConnection; // RTCPeerConnection for exchanging media (with listeners for media and ICE)
-    dataChannel; // RTCDataChannel for exchanging signaling and chat messages (with listeners)
+    dataChannel; // RTCDataChannel for exchanging signaling (with listeners)
     state; // NOT_CONNECTED, CONNECTING, CONNECTED, DISCONNECTED_SELF, DISCONNECTED_REMOTE
-    options; // constructor args {onStateChange, onLocalMedia, onRemoteMedia, onChatMessage}
+    options; // constructor args {onStateChange, onLocalMedia, onRemoteMedia}
     localStream; // MediaStream from local webcam and microphone
 
     constructor(options) {
@@ -73,14 +73,13 @@ export class PeerConnection {
         return conn;
     }
 
-    setupDataChannel(channel) { // RTCDataChannel for exchanging signaling and chat messages
+    setupDataChannel(channel) { // RTCDataChannel for exchanging signaling
         channel.onmessage = event => {
             console.log("Received data channel message", event.data);
             if (event.data === "BYE") {
                 this.disconnect("REMOTE");
                 return console.log("Received BYE message, closing connection");
             }
-            this.options.onChatMessage(JSON.parse(event.data).chat);
         }
         return channel;
     }
