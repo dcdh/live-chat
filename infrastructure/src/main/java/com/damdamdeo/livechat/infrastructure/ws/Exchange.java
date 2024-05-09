@@ -1,4 +1,4 @@
-package com.damdamdeo.livechat.infrastructure;
+package com.damdamdeo.livechat.infrastructure.ws;
 
 import jakarta.websocket.Session;
 

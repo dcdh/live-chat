@@ -10,11 +10,11 @@ const peerConnection = new PeerConnection({
 
 document.getElementById("startPairing").addEventListener("click", async () => {
     peerConnection.setState("CONNECTING");
-    peerConnection.sdpExchange.send(JSON.stringify({name: "PAIRING_START"}))
+    peerConnection.sdpExchange.send(JSON.stringify({pairingStep: "PAIRING_START"}))
 });
 
 document.getElementById("abortPairing").addEventListener("click", () => {
-    peerConnection.sdpExchange.send(JSON.stringify({name: "PAIRING_ABORT"}))
+    peerConnection.sdpExchange.send(JSON.stringify({pairingStep: "PAIRING_ABORT"}))
     peerConnection.disconnect("LOCAL");
 })
 
