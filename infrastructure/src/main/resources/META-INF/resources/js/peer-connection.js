@@ -30,6 +30,7 @@ export class PeerConnection {
             const message = JSON.parse(event.data);
             console.log("Received WebSocket message", message.name)
             if (message.name === "PARTNER_FOUND") this.handlePartnerFound(message.data);
+            if (message.name === "PARTNER_FOUND_GO_FIRST") this.handlePartnerFoundGoFirst(message.data);
             if (message.name === "SDP_OFFER") this.handleSdpOffer(JSON.parse(message.data));
             if (message.name === "SDP_ANSWER") this.handleSdpAnswer(JSON.parse(message.data));
             if (message.name === "SDP_ICE_CANDIDATE") this.handleIceCandidate(JSON.parse(message.data));
@@ -103,9 +104,10 @@ export class PeerConnection {
     }
 
     handlePartnerFound(instructions) {
-        if (instructions !== "GO_FIRST") {
-            return console.log("Partner found, waiting for SDP offer ..."); // only for the "answerer" (the one who receives the SDP offer)
-        }
+        console.log("Partner found, waiting for SDP offer ...");
+    }
+
+    handlePartnerFoundGoFirst(instructions) {
         console.log("Partner found, creating SDP offer and data channel");
         this.tryHandle("PARTNER_FOUND", async () => { // only for the "offerer" (the one who sends the SDP offer)
             this.dataChannel = this.setupDataChannel(this.peerConnection.createDataChannel("data-channel"));

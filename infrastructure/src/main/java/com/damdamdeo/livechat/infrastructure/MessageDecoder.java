@@ -13,8 +13,8 @@ public class MessageDecoder implements Decoder.Text<Message> {
         final JsonObject jsonObject = Json
                 .createReader(new StringReader(jsonMessage)).readObject();
         return new Message(
-                jsonObject.getString("name"),
-                jsonObject.getString("data", null));
+                jsonObject.getString(MessageEncoder.NAME),
+                jsonObject.getString(MessageEncoder.DATA, null));
     }
 
     @Override

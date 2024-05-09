@@ -62,7 +62,7 @@ public class MatchmakingWebSocket {
                 .orElse(null);
         if (exchange != null) {
             exchange.setB(session);
-            send(exchange.a(), new Message("PARTNER_FOUND", "GO_FIRST"));
+            send(exchange.a(), new Message("PARTNER_FOUND_GO_FIRST"));
             send(exchange.b(), new Message("PARTNER_FOUND"));
         } else {
             queue.add(new Exchange(session));
