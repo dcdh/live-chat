@@ -1,0 +1,232 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "infrastructure API",
+    "version" : "1.0.0-SNAPSHOT"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080",
+    "description" : "Auto generated value"
+  }, {
+    "url" : "http://0.0.0.0:8080",
+    "description" : "Auto generated value"
+  } ],
+  "paths" : {
+    "/api/oneToOne/matchmaking/lifecycle/{requestedBy}/stream" : {
+      "get" : {
+        "tags" : [ "Match Making Lifecycle Endpoint" ],
+        "operationId" : "subscribe",
+        "parameters" : [ {
+          "name" : "requestedBy",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "examples" : {
+            "00000000-0000-0000-0000-000000000001" : {
+              "value" : "00000000-0000-0000-0000-000000000001"
+            },
+            "00000000-0000-0000-0000-000000000002" : {
+              "value" : "00000000-0000-0000-0000-000000000002"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OutboundSseEvent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/oneToOne/matchmaking/request/{requestedBy}/cancel" : {
+      "post" : {
+        "tags" : [ "Match Making Request Endpoint" ],
+        "operationId" : "cancelMatchMaking",
+        "parameters" : [ {
+          "name" : "requestedBy",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "examples" : {
+            "00000000-0000-0000-0000-000000000001" : {
+              "value" : "00000000-0000-0000-0000-000000000001"
+            },
+            "00000000-0000-0000-0000-000000000002" : {
+              "value" : "00000000-0000-0000-0000-000000000002"
+            }
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          }
+        }
+      }
+    },
+    "/api/oneToOne/matchmaking/request/{requestedBy}/findAStranger" : {
+      "post" : {
+        "tags" : [ "Match Making Request Endpoint" ],
+        "operationId" : "findAStranger",
+        "parameters" : [ {
+          "name" : "requestedBy",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "examples" : {
+            "00000000-0000-0000-0000-000000000001" : {
+              "value" : "00000000-0000-0000-0000-000000000001"
+            },
+            "00000000-0000-0000-0000-000000000002" : {
+              "value" : "00000000-0000-0000-0000-000000000002"
+            }
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          }
+        }
+      }
+    },
+    "/api/oneToOne/matchmaking/request/{requestedBy}/leave" : {
+      "post" : {
+        "tags" : [ "Match Making Request Endpoint" ],
+        "operationId" : "leaveMatchMaking",
+        "parameters" : [ {
+          "name" : "requestedBy",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "examples" : {
+            "00000000-0000-0000-0000-000000000001" : {
+              "value" : "00000000-0000-0000-0000-000000000001"
+            },
+            "00000000-0000-0000-0000-000000000002" : {
+              "value" : "00000000-0000-0000-0000-000000000002"
+            }
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "MatchedOneToOneLifecycle" : {
+        "required" : [ "initiatedBy", "joinedBy", "matchedAt", "matchedStatus", "initiatedBy", "joinedBy", "matchedAt", "matchedStatus" ],
+        "type" : "object",
+        "properties" : {
+          "initiatedBy" : {
+            "type" : "string"
+          },
+          "joinedBy" : {
+            "type" : "string"
+          },
+          "matchedAt" : {
+            "type" : "string",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ZonedDateTime"
+            } ]
+          },
+          "leavedAt" : {
+            "type" : "string",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ZonedDateTime"
+            } ]
+          },
+          "matchedStatus" : {
+            "$ref" : "#/components/schemas/MatchedStatus"
+          }
+        }
+      },
+      "MatchedStatus" : {
+        "enum" : [ "MATCHED", "LEAVED_INITIATOR", "LEAVED_STRANGER" ],
+        "type" : "string"
+      },
+      "MediaType" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "subtype" : {
+            "type" : "string"
+          },
+          "parameters" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "hash" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "wildcardType" : {
+            "type" : "boolean"
+          },
+          "wildcardSubtype" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "OutboundSseEvent" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "comment" : {
+            "type" : "string"
+          },
+          "reconnectDelay" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "reconnectDelaySet" : {
+            "type" : "boolean"
+          },
+          "type" : {
+            "type" : "object"
+          },
+          "genericType" : {
+            "type" : "object"
+          },
+          "mediaType" : {
+            "$ref" : "#/components/schemas/MediaType"
+          },
+          "data" : { }
+        }
+      },
+      "ZonedDateTime" : {
+        "format" : "date-time",
+        "type" : "string",
+        "example" : "2022-03-10T12:15:50-04:00"
+      }
+    }
+  }
+}
